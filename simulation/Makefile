@@ -12,7 +12,7 @@ EXE=run-black-box-learning
 # Compiler #
 CC 		= g++
 # CFLAGS	= -std=c++11 -Wall -DVERSION=\"$(GIT_VERSION)\" 
-CFLAGS	= -std=c++11 -Wall -DVERSION=\"$(GIT_VERSION)\" 
+CFLAGS	= -std=c++11 -Wall 
 OPT 	= 
 # OPT 	= -O2 -g
 
