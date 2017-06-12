@@ -1,38 +1,21 @@
 # Set the Directory
-
-# Linux DIR
-#setwd("~/GameTheory/Heinrich/11.10.2015")       # Linux
-
-
-
-## ---- Hypothesis_Analysis 
-
-# Windows DIR
-#setwd("ETH/Work/GameTheory/Heinrich/11.10.2015/report/") # Windows
+#setwd("")      
 
 # The data directory name
 DATA_DIR <- "../data"
 
-# Outputign counter values 
-OUT_DIR <- "19.10.2015_analysis"
-
 # Inlcude libraries etc.
-require(ggplot2)
 require(lawstat)
 
 # Define some parameters #
-
 NSims <- 1
 NTime <- 1000
 NPlayers <- 16
 
 
-
-
 # ----------------------------------------------- #
 
 # Now let's work on the hypothesis testing on a single simulation #
-
 
 # Number / ID of the simulation to use
 using_sim = 1
