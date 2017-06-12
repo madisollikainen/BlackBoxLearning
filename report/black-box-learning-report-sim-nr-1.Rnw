@@ -35,10 +35,11 @@ options(digits=4)
 @
 
 <<READ, include=FALSE, cache=FALSE, echo=FALSE>>=
+using_sim = 1
 source("Hypothesis_Analysis.R")
 @
 
-\title{Black box learning simulation report}
+\title{Black box learning simulation report (sim nr \Sexpr{using_sim})}
 \author{Madis Ollikainen}
 \maketitle
 
