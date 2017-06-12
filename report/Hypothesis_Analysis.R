@@ -18,7 +18,7 @@ NPlayers <- 16
 # Now let's work on the hypothesis testing on a single simulation #
 
 # Number / ID of the simulation to use
-using_sim = 1
+# using_sim = 1
 
 # Now define the limits for the 
 start_seq <- c(1, 100)
