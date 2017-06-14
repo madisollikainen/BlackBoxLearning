@@ -13,7 +13,7 @@ int main (int argc, char* argv[]){
 
 	// --- Read Command Line Inputs --- //
 
-	// Simulation lenght --> number of iteration/time steps TM
+	// Random numer generator seed
 	int seed = 433; 
 	if(cmdOptionExists(argv, argv+argc, "-seed"))
 	    {
