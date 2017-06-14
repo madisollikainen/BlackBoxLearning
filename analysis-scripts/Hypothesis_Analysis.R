@@ -1,5 +1,5 @@
 # Set the Directory
-#setwd("")      
+# setwd("~/code/BlackBoxLearning/report/")
 
 # The data directory name
 DATA_DIR <- "../data"
@@ -25,11 +25,14 @@ start_seq <- c(1, 100)
 end_seq <- c(800, 899)
 
 # Open raw simulation data 
-# The file names
-FN_pof_04 <- paste(DATA_DIR,"/payoffs_R0.4_G",using_sim ,".dat",sep="") 
-FN_pof_16 <- paste(DATA_DIR,"/payoffs_R1.6_G",using_sim ,".dat",sep="")
-FN_str_04 <- paste(DATA_DIR,"/strategies_R0.4_G",using_sim ,".dat",sep="") 
-FN_str_16 <- paste(DATA_DIR,"/strategies_R1.6_G",using_sim ,".dat",sep="")
+# The file names -- using Sys.glob for the * wildcard at the RNG seed 
+FN_pof_04 <- Sys.glob(paste(DATA_DIR,"/payoffs_R0.4_S*_nr",using_sim ,".dat",sep="")) 
+FN_pof_16 <- Sys.glob(paste(DATA_DIR,"/payoffs_R1.6_S*_nr",using_sim ,".dat",sep=""))
+FN_str_04 <- Sys.glob(paste(DATA_DIR,"/strategies_R0.4_S*_nr",using_sim ,".dat",sep="")) 
+FN_str_16 <- Sys.glob(paste(DATA_DIR,"/strategies_R1.6_S*_nr",using_sim ,".dat",sep=""))
+
+# Get the RNG seed 
+RNG_seed <- 
 
 # Open the data files 
 POF_04 <- read.table(FN_pof_04, header=F)
