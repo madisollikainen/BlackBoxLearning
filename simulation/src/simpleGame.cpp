@@ -15,8 +15,8 @@ simpleGame::simpleGame(unsigned int n_pl, unsigned int n_g, unsigned int n_str, 
 		M = n_players/n_groups;
 
 		// Assign the initial group_list
-		for (int i=0; i < n_groups; i++){
-			for(int j=0; j < M; j++){
+		for (uint i=0; i < n_groups; i++){
+			for (uint j=0; j < M; j++){
 				group_list.push_back(j); 
 			}
 		}		
@@ -80,7 +80,7 @@ void simpleGame::init_propensities(double a_Big, double a_Small){
 
 
 	// Assert that the number of strategies is 41 or 9
-	assert(n_strategies == 41 || n_strategies == 9 && "init_propensities can't be used unless we have 41 or 9 strategies!'");
+	assert( (n_strategies == 41 || n_strategies == 9) && "init_propensities can't be used unless we have 41 or 9 strategies!'");
 
 
 	// If 41 strategies: multiply the initial propensities for: 
@@ -88,15 +88,15 @@ void simpleGame::init_propensities(double a_Big, double a_Small){
 	if(n_strategies == 41){
 
 		// Loop over players
-		for (int i=0; i < n_players; i++){
+		for (uint i=0; i < n_players; i++){
 
 			// Loop for the a_BIG
-			for (int j=0; j < 5; j++ ){
+			for (uint j=0; j < 5; j++ ){
 				propensities[ i*n_strategies + j*10 ] = propensities[ i*n_strategies + j*10 ]*a_Big ;
 			}
 
 			// Loop for the a_SMALL
-			for (int j=1; j < 10; j++ ){
+			for (uint j=1; j < 10; j++ ){
 				propensities[ i*n_strategies + j ] = propensities[ i*n_strategies + j ]*a_Small ;
 			}
 		}
@@ -107,10 +107,10 @@ void simpleGame::init_propensities(double a_Big, double a_Small){
 	else if(n_strategies == 9){
 
 		// Loop over players
-		for (int i=0; i < n_players; i++){
+		for (uint i=0; i < n_players; i++){
 
 			// Loop for the a_BIG
-			for (int j=0; j < 5; j++ ){
+			for (uint j=0; j < 5; j++ ){
 				propensities[ i*n_strategies + j*2 ] = propensities[ i*n_strategies + j*2 ]*a_Big ;
 			}
 			// And the single a_SMALL propensity for strategy 5
@@ -127,7 +127,7 @@ void simpleGame::init_propensities(double a_Big, double a_Small){
 void simpleGame::decide_strategies(){
 
 	// Loop over the players
-	for (int i = 0; i < n_players; i++){
+	for (uint i = 0; i < n_players; i++){
 
 		// Generate a discrete probability distribution to draw from 
 		std::discrete_distribution<int> prob_dist(propensities.begin() + (i*n_strategies), propensities.begin() + ( (i+1)*n_strategies ) );
@@ -155,12 +155,12 @@ void simpleGame::assign_groups(){
 void simpleGame::sum_inputs(){
 
 	// Reset the sums to zero
-	for(int i=0; i < n_groups; i++){
+	for (uint i=0; i < n_groups; i++){
 		group_sums[i] = 0.0;
 	}
 
 	// Loop over the players
-	for(int i=0; i < n_players; i++){
+	for (uint i=0; i < n_players; i++){
 		group_sums[ group_list[i] ] += played_strategies[i];
 	}	
 
@@ -179,7 +179,7 @@ double simpleGame::get_payoff(int str, int group){
 void simpleGame::assign_payoffs(){
 
 	// Loop over the players
-	for (int i = 0; i < n_players; i++){
+	for (uint i = 0; i < n_players; i++){
 		payoffs[i] = get_payoff(played_strategies[i], group_list[i]);
 	}
 
@@ -190,7 +190,7 @@ void simpleGame::assign_payoffs(){
 void simpleGame::learning(){
 
 	// Loop over players
-	for (int i=0; i < n_players; i++){
+	for (uint i=0; i < n_players; i++){
 
 		propensities[ i*n_strategies + played_strategies[i] ] += payoffs[i];
 
@@ -203,7 +203,7 @@ void simpleGame::learning(){
 void simpleGame::forget(){
 
 	// Loop over the players && strategies
-	for(int i=0; i<n_players*n_strategies; i++){
+	for (uint i=0; i<n_players*n_strategies; i++){
 		propensities[i] = propensities[i]*(1.0 - forgetfulness);
 	}
 
@@ -244,7 +244,7 @@ void simpleGame::print_output(bool print_prop, int t){
 	// The strategy outputing
 	if ( str_out.is_open() ){
 		str_out << t << "\t"; 
-		for (int S : played_strategies){
+		for (uint S : played_strategies){
 			str_out << S*str_step << "\t";
 		}
 		str_out << std::endl;
@@ -253,7 +253,7 @@ void simpleGame::print_output(bool print_prop, int t){
 	// The payoff outputing
 	if ( payoff_out.is_open() ){
 		payoff_out << t << "\t"; 
-		for (int P : payoffs){
+		for (uint P : payoffs){
 			payoff_out << P << "\t";
 		}
 		payoff_out << std::endl;
@@ -263,8 +263,8 @@ void simpleGame::print_output(bool print_prop, int t){
 		// The propensity outputing
 		if ( prop_out.is_open() ){
 			prop_out << "#" << std::endl << "#\tt = " << t << std::endl << "#" << std::endl;
-			for (int i=0; i < n_players; i++){
-				for(int j=0; j < n_strategies; j++){
+			for (uint i=0; i < n_players; i++){
+				for (uint j=0; j < n_strategies; j++){
 					prop_out << propensities[i*n_strategies + j] << "\t";
 				}
 				prop_out << std::endl;
