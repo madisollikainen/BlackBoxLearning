@@ -14,7 +14,7 @@
 #include <cassert>
 #include <iostream>
 
-#include "timeEngine.hpp"
+#include "timeEngine.h"
 
 
 
@@ -25,7 +25,7 @@ class simpleGame{
 	
 	// --- Constructor && Destructor --- //
 
-	simpleGame(unsigned int n_pl, unsigned int n_g,  unsigned int n_str, int s_step ,double frg, double init_prop, double R);
+	simpleGame(unsigned int n_pl, unsigned int n_g,  unsigned int n_str, int s_step ,double frg, double init_prop, double R, unsigned int seed);
 	~simpleGame();
 
 

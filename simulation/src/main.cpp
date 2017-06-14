@@ -12,6 +12,14 @@
 int main (int argc, char* argv[]){
 
 	// --- Read Command Line Inputs --- //
+
+	// Simulation lenght --> number of iteration/time steps TM
+	int seed = 433; 
+	if(cmdOptionExists(argv, argv+argc, "-seed"))
+	    {
+		char * tmp = getCmdOption(argv, argv + argc, "-seed");
+		seed = atoi(tmp); 
+	    }
 	
 	// Simulation lenght --> number of iteration/time steps TM
 	int TM = 1000; 
@@ -116,7 +124,7 @@ int main (int argc, char* argv[]){
 	// --- Intialize the Game and the outputs --- //
 
 	// Initialize the game
-	simpleGame myGame(NP, NG, NS, dS, F, P0, R);
+	simpleGame myGame(NP, NG, NS, dS, F, P0, R, seed);
 
 	// Initialize the outputing
 	myGame.init_output(printProp);
