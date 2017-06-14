@@ -33,6 +33,20 @@ There are a few scripts included which will help run the simulation for differen
 ./run-sim.sh 10
 ```    
 
+The script `gen-summary.sh` is an interface for the R scripts `analysis-scripts/Hypothesis_Analysis.R` and `analysis-scripts/black-box-learning-summary.Rnw`. The first of the R scripts does the actual hypothesis analysis, while the second uses the `knitr` library to generate a short summary report of the hypothesis analysis results. For using these scripts you must have Latex, R and several R libraries installed. The R libraries `knitr`, `lawstat` and their dependencies are definetly necessary, but if you haven't already installed some of the most often used R core libraries, then these might also be needed. 
+
+The script `gen-summary.sh` expects you to have followed the same output collecting, renaming and storing protocol as used by `run-sim.sh`. It also needs as a commandline argument the ordering number of the simulation run for which you wish to get the analysis. For example if you ran 10 simulations (`./run-sim.sh 10`) and wish to get a summary for the 6-th simulation, you should type 
+
+```
+./gen-summary.sh 6
+```
+
+The script `run-all.sh` compines to two above scripts, it runs the simulation for a user defined times and also generates a summery for all of the simulation runs. For example, if you wish to run the simulation with 16 different seeds and generate a summary for all seeds, then type 
+
+```
+./run-all.sh 16
+``` 
+
 
 ## Code history
 
