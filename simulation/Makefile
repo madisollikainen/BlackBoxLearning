@@ -7,7 +7,6 @@
 # makefile as well as in the main function file for generating
 # the usage massage.
 EXE=run-black-box-learning
-# TEST_EXE=test_hasher
 
 # Compiler #
 CC 		= g++
@@ -24,11 +23,8 @@ BUILD   = build
 
 all: ${EXE} #${TEST_EXE} 
 
-# ${TEST_EXE}: ${SRC}/${EXE}.cpp ${HEADERS}/*.hpp ${BUILD}
-# 	${CC} ${CFLAGS} -DTEST -DEXE_NAME=\"$(TEST_EXE)\" ${OPT} -o ${BUILD}/${TEST_EXE} ${SRC}/${EXE}.cpp ${OpenSSL} -I${HEADERS}
-
 ${EXE}: ${SRC}/*.cpp ${HEADERS}/*.hpp ${BUILD}
-	${CC} ${CFLAGS} -DEXE_NAME=\"$(EXE)\" ${OPT} -o ${BUILD}/${EXE} ${SRC}/*.cpp -I${HEADERS}
+	${CC} ${CFLAGS} ${OPT} -o ${BUILD}/${EXE} ${SRC}/*.cpp -I${HEADERS}
 
 ${BUILD}:
 	mkdir -p ${BUILD}
