@@ -32,7 +32,7 @@ FN_str_04 <- Sys.glob(paste(DATA_DIR,"/strategies_R0.4_S*_nr",using_sim ,".dat",
 FN_str_16 <- Sys.glob(paste(DATA_DIR,"/strategies_R1.6_S*_nr",using_sim ,".dat",sep=""))
 
 # Get the RNG seed 
-RNG_seed <- 
+RNG_seed <-  strsplit( as.vector(strsplit(FN_pof_04, "_S"))[[1]][2] , "_")[[1]][1]
 
 # Open the data files 
 POF_04 <- read.table(FN_pof_04, header=F)

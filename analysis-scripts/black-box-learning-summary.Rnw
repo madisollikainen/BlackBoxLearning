@@ -45,9 +45,33 @@ source("Hypothesis_Analysis.R")
 \maketitle
 
 \section{Hypothesis Test Results}
-Here I give a short summary of the hypothesis test results. The hypothesis tests were done on the simulation steps $T=\Sexpr{start_seq[1] + 2} - \Sexpr{start_seq[2] + 2}$ and $T=\Sexpr{end_seq[1] + 2} - \Sexpr{end_seq[2] + 2}$ separately for both $R=0.4$ and $R=1.6$ cases. The hypothesis test are done only on one simulation, which at the moment is the simulation number \Sexpr{using_sim}.
+Here I give a short summary of the hypothesis test results. The hypothesis tests were done on the simulation steps $T=\Sexpr{start_seq[1] + 2} - \Sexpr{start_seq[2] + 2}$ and $T=\Sexpr{end_seq[1] + 2} - \Sexpr{end_seq[2] + 2}$ separately for both $R=0.4$ and $R=1.6$ cases. The hypothesis test are done only on one simulation, which at the moment is the simulation number \Sexpr{using_sim}; the random number generator seed \Sexpr{RNG_seed} is used.
 
 \subsection{Asymmetric Interia Hypothesis}
+
+We call the situation, when the contribution $c_i^t$ of player $i$ at time $t$ is the same as the players contribution during the previous time step $c_i^{t-1}=c_i^t$, \emph{inertia}. The asymmetric inertia hypothesis states that inertia is expected to be more probable in the case of steady or increasing payoffs $\phi_i^{t-1} \ge \phi_i^{t-2}$ than in the case of decresing payoffs $\phi_i^{t-1} < \phi_i^{t-2}$. We'll call the first case \emph{success} and the second one \emph{failure}. The hypothesis was tested using \emph{probit regression} for the mathematical model:
+
+\begin{equation}
+Inertia(i,t) = \beta \times Success(i,t-1) + \epsilon
+\end{equation}
+
+where
+
+\begin{equation}
+Inertia(i, t) =
+\begin{cases}
+1, & \mbox{if } c_i^t = c_i^{t-1} \\
+0, & \mbox{if } c_i^t \neq c_i^{t-1}
+\end{cases} \qquad
+Success(i, t-1) =
+\begin{cases}
+1, & \mbox{if } \phi_i^{t-1} \ge \phi_i^{t-2} \\
+0, & \mbox{if } \phi_i^{t-1} < \phi_i^{t-2}
+\end{cases}
+\end{equation}
+\\
+\\
+Tabel \ref{tab:AsymInertia} summerizes the probit regression results.
 
 \begin{table}[h]
 \begin{center}
@@ -81,6 +105,30 @@ $R$ & Time steps & $\beta$ & p-value \\
 
 \subsection{Reversion Hypothesis}
 
+The reversion hypothesis states that the after changing of strategy reversion to the previous strategy is more probable if the payoff decresed than when payoff increased or was steady. The hypothesis was tested using \emph{probit regression} for the mathematical model:
+
+\begin{equation}
+Reversion(i,t) = \beta \times Success(i,t-1) + \epsilon
+\end{equation}
+
+where
+
+\begin{equation}
+Reversion(i, t) =
+\begin{cases}
+1, & \mbox{if } c_i^{t-1} \neq c_i^{t-2} \mbox{ and } c_i^t = c_i^{t-2} \\
+0, & \mbox{if } c_i^{t-1} \neq c_i^{t-2} \mbox{ and } c_i^t \neq c_i^{t-2}
+\end{cases} \qquad
+Success(i, t-1) =
+\begin{cases}
+1, & \mbox{if } \phi_i^{t-1} \ge \phi_i^{t-2} \\
+0, & \mbox{if } \phi_i^{t-1} < \phi_i^{t-2}
+\end{cases}
+\end{equation}
+\\
+
+Tabel \ref{tab:Reversion} summerizes the probit regression results.
+
 \begin{table}[h]
 \begin{center}
 \begin{tabular}{ l | l  || c | c }
@@ -111,6 +159,8 @@ $R$ & Time steps & $\beta$ & p-value \\
 
 
 \subsection{Asymmetric volatility hypothesis}
+
+The asymmetric volatility hypothesis states that the variance of adjustments following payoff decrease, e.g \emph{failure}, is larger than the variance of adjustments following \emph{successful} strategies.  The hypothesis was tested using the Levene's test. Tabel \ref{tab:AsymVolatility} summarizes the results of the hypothesis testing.
 
 \begin{table}[h]
 \begin{center}
@@ -143,6 +193,14 @@ $R$ & Time steps & $\mathbb{V}_{fail} - \mathbb{V}_{success}$ & p-value \\
 
 \subsection{Asymmetric breadth hypothesis}
 
+The asymmetric breadth hypothesis states that the size of the adjustments in the strategies are larger following a failing strategy than they are following a successful strategy. The hypothesis was tested using simple linear regression with for the model:
+
+\begin{equation}
+\left| c_i^t - c_i^{t-1} \right| = \beta \times Success(i,t-1) + \epsilon
+\end{equation}
+
+where $Success(i,t-1)$ is defined as above. Table \ref{tab:AsymBreadth} summerizes the test results.
+
 \begin{table}[h]
 \begin{center}
 \begin{tabular}{ l | l  || c | c }
@@ -173,6 +231,14 @@ $R$ & Time steps & $\beta$ & p-value \\
 \end{table}
 
 \subsection{Directional Bias hypothesis}
+
+The directional bias states that the adjustments following successful positive adjustments are larger than those following failed positive adjustments. Similary adjustments following seccessful negative adjustments are smaller than those following failed negative adjustments. Both statements of the hypothesis are tested using linear regression for the models:
+
+\begin{equation}
+c_i^t - c_i^{t-1} = \beta \times Success(i,t-1) + \epsilon
+\end{equation}
+
+such that cases where $c_i^{t-1} - c_i^{t-2} \ge 0$ and $c_i^{t-1} - c_i^{t-2} < 0$ are treated separetly. Also cases where there was inertia during the previous time step are not considered for the statistics. Table \ref{tab:DirectionalBias} summarizes the test results.
 
 \begin{table}[h]
 \begin{center}
